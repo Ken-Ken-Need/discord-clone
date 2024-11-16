@@ -1,4 +1,4 @@
-import { User } from "../database/models"
+import { User } from "@/database/models"
 import connectDB from "@/database/connectDB";
 import { NextApiRequest, NextApiResponse } from "next";
 
