@@ -12,7 +12,7 @@ export default async function createUser(req: NextApiRequest, res: NextApiRespon
             if (!user) {
                 return res.status(404).json({ message: 'User not found' });
             } res.status(200).json(user);
-        } catch (error) { res.status(500).json({ message: error.message }); }
+        } catch (error) { res.status(500).json({ message: error }); }
     } else {
         res.setHeader('Allow', ['GET']);
         res.status(405).end(`Method ${req.method} Not Allowed`);
