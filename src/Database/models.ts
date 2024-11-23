@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 
 const userSchema = new Schema({
     username: { type: String, required: true, unique: true },
@@ -38,8 +38,9 @@ const messageSchema = new Schema({
 });
 
 
-export const User = model('User', userSchema);
-export const Member = model('Member', memberSchema);
-export const Channel = model('Channel', channelSchema);
-export const Server = model('Server', serverSchema);
-export const Message = model('Message', messageSchema);
+const User = models.User || model('User', userSchema);
+const Member = models.Member || model('Member', memberSchema);
+const Channel = models.Channel || model('Channel', channelSchema);
+const Server = models.Server || model('Server', serverSchema);
+const Message = models.Message || model('Message', messageSchema);
+export { User, Member, Server, Channel, Message };
