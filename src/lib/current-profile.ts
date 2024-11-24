@@ -3,7 +3,7 @@ import { User } from "@/database/models";
 import connectDB from "@/database/connectDB";
 
 export const currentProfile = async () => {
-    // await connectDB();
+    await connectDB();
     const { userId } = await auth();
     if (!userId) {
         return null;
