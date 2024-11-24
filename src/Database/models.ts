@@ -1,5 +1,6 @@
 import { Schema, model, models } from 'mongoose';
 
+
 const userSchema = new Schema({
     username: { type: String, required: true, unique: true },
     userID: { type: String, required: true, unique: true },
@@ -13,6 +14,7 @@ const userSchema = new Schema({
 const serverSchema = new Schema({
     name: { type: String, required: true },
     members: [{ type: Schema.Types.ObjectId, ref: 'Member' }],
+    channels: [{ type: Schema.Types.ObjectId, ref: 'Channel' }],
     createdAt: { type: Date, default: Date.now },
     inviteCode: { type: String, required: true }
 });

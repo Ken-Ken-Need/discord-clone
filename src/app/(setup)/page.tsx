@@ -3,13 +3,13 @@ import connectDB from '@/database/connectDB';
 import { initialProfile } from '@/lib/initial-profile';
 import React from 'react';
 import { redirect } from 'next/navigation';
+import { InitialModal } from '@/components/ui/modals/initialModal';
 
 
 const setUpPage = async() => {
     try {
         await connectDB();
         const user = await initialProfile();   
-        console.log(user);
         const member = await Member.findOne({user}).populate('server');
         if (!member) {
         } else {
@@ -18,7 +18,7 @@ const setUpPage = async() => {
         }
         
         return (
-            <div>Create a server</div>
+            <InitialModal/>
         )
     } catch (e) {
         console.log(e);
