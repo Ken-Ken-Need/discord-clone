@@ -52,7 +52,6 @@ export const InitialModal = () => {
 
     const isLoading = form.formState.isSubmitting;
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log(values);
         try {
             // post
             await fetch("/api/servers/", {
