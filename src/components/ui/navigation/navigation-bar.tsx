@@ -1,6 +1,5 @@
 import getServers from "@/lib/gerServers";
 import { Server } from "@/database/models";
-import connectDB from "@/database/connectDB";
 import { Schema } from "mongoose";
 import {
     Tooltip,
@@ -12,7 +11,6 @@ import { Separator } from "@/components/ui/separator";
 import { Plus } from "lucide-react";
 
 const NavigationBar = async () => {
-    await connectDB();
     const serverList = await getServers();
     return (
         <div className="space-y-4 flex flex-col items-center 
