@@ -16,6 +16,7 @@ export async function POST(req: Request) {
         const newServer = new Server({
             name: name,
             inviteCode: uuidv4(),
+            owner: user._id,
         })
         const savedServer = await newServer.save();
 
@@ -35,6 +36,9 @@ export async function POST(req: Request) {
 
         savedServer.members.push(savedMember._id);
         savedServer.channels.push(savedChannel._id);
+
+        user.servers.push(savedServer._id);
+        await user.save();
         await savedServer.save();
 
     } catch (e) {

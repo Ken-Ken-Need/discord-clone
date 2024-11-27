@@ -15,6 +15,7 @@ const serverSchema = new Schema({
     name: { type: String, required: true },
     members: [{ type: Schema.Types.ObjectId, ref: 'Member' }],
     channels: [{ type: Schema.Types.ObjectId, ref: 'Channel' }],
+    owner: { type: Schema.Types.ObjectId, ref: 'Member' },
     createdAt: { type: Date, default: Date.now },
     inviteCode: { type: String, required: true }
 });

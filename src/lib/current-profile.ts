@@ -6,7 +6,7 @@ export const currentProfile = async () => {
     await connectDB();
     const { userId } = await auth();
     if (!userId) {
-        return null;
+        return;
     }
 
     const user = await User.findOne({ userID: userId });
