@@ -9,6 +9,6 @@ export const currentProfile = async () => {
         return;
     }
 
-    const user = await User.findOne({ userID: userId });
+    const user = await User.findOne({ userID: userId }).populate('servers').exec();
     return user
 }
