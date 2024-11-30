@@ -33,7 +33,7 @@ const NavigationBar = async () => {
                         <TooltipProvider key={index}>
                             <Tooltip>
                                 <TooltipTrigger>
-                                    <div className="bg-slate-500 w-[48px] h-[48px] rounded-[24px] text-zinc-100 text-xl hover:rounded-[16px] transition-all" >
+                                    <div className="bg-slate-500 w-[48px] h-[48px] rounded-[24px] text-zinc-100 text-xl hover:rounded-[16px] transition-all overflow-hidden" >
                                         {s.name}
                                     </div>
                                 </TooltipTrigger>
