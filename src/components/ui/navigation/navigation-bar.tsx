@@ -1,6 +1,5 @@
 import getServers from "@/lib/gerServers";
-import { Server } from "@/database/models";
-import { Schema } from "mongoose";
+import { ServerType } from "@/database/typesOfSchemas";
 import {
     Tooltip,
     TooltipContent,
@@ -9,6 +8,8 @@ import {
 } from "@/components/ui/tooltip"
 import { Separator } from "@/components/ui/separator";
 import { Plus } from "lucide-react";
+
+
 
 const NavigationBar = async () => {
     const serverList = await getServers();
@@ -26,21 +27,25 @@ const NavigationBar = async () => {
                 </Tooltip>
             </TooltipProvider>
             <Separator className="rounded w-3/4 bg-zinc-400" />
-            {serverList.map(async (server: Schema.Types.ObjectId, index: number) => {
-                const s = await Server.findOne(server);
-                return (
-                    <TooltipProvider key={index}>
-                        <Tooltip>
-                            <TooltipTrigger>
-                                <div className="bg-slate-500 w-[48px] h-[48px] rounded-[24px] text-zinc-100 text-xl hover:rounded-[16px] transition-all" >
+            {serverList.map((s: ServerType, index: number) => {
+                if (s) {
+                    return (
+                        <TooltipProvider key={index}>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <div className="bg-slate-500 w-[48px] h-[48px] rounded-[24px] text-zinc-100 text-xl hover:rounded-[16px] transition-all" >
+                                        {s.name}
+                                    </div>
+                                </TooltipTrigger>
+                                <TooltipContent className="bg-opacity-80 bg-black" side="right" sideOffset={15}>
                                     {s.name}
-                                </div>
-                            </TooltipTrigger>
-                            <TooltipContent className="bg-opacity-80 bg-black" side="right" sideOffset={15}>
-                                {s.name}
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>);
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>);
+                }
+                else {
+                    return null;
+                }
             })}
         </div>
     )
