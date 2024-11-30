@@ -1,4 +1,4 @@
-import getServers from "@/lib/gerServers";
+import getServers from "@/lib/getServers";
 import { ServerType } from "@/database/typesOfSchemas";
 import {
     Tooltip,
