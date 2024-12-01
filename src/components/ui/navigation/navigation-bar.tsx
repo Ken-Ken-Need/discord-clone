@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/tooltip"
 import { Separator } from "@/components/ui/separator";
 import { Plus } from "lucide-react";
+import NavigationAction from "./navigation-actions";
 
 
 
@@ -28,24 +29,9 @@ const NavigationBar = async () => {
             </TooltipProvider>
             <Separator className="rounded w-3/4 bg-zinc-400" />
             {serverList.map((s: ServerType, index: number) => {
-                if (s) {
-                    return (
-                        <TooltipProvider key={index}>
-                            <Tooltip>
-                                <TooltipTrigger>
-                                    <div className="bg-slate-500 w-[48px] h-[48px] rounded-[24px] text-zinc-100 text-xl hover:rounded-[16px] transition-all overflow-hidden" >
-                                        {s.name}
-                                    </div>
-                                </TooltipTrigger>
-                                <TooltipContent className="bg-opacity-80 bg-black" side="right" sideOffset={15}>
-                                    {s.name}
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>);
-                }
-                else {
-                    return null;
-                }
+                return (
+                    <NavigationAction key={index} server={s} />
+                )
             })}
         </div>
     )
