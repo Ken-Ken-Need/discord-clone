@@ -9,6 +9,7 @@ import {
   SignedOut,
   UserButton
 } from '@clerk/nextjs';
+import { ModalProvider } from "@/components/providers/modalProvider";
 
 const font = Open_Sans({ subsets: ['latin'] });
 
@@ -32,6 +33,7 @@ export default function RootLayout({
           <SignedIn>
             <UserButton />
           </SignedIn>
+          {/* <ModalProvider /> */}
           {children}
         </body>
       </html>
