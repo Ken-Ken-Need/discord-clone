@@ -60,8 +60,6 @@ export const CreateServerModal = () => {
 
             form.reset();
             router.refresh();
-            window.location.reload();
-
         } catch (e) {
             console.log(e);
         }

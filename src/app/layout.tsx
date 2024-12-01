@@ -33,7 +33,7 @@ export default function RootLayout({
           <SignedIn>
             <UserButton />
           </SignedIn>
-          {/* <ModalProvider /> */}
+          <ModalProvider />
           {children}
         </body>
       </html>
