@@ -1,38 +1,30 @@
 import getServers from "@/lib/getServers";
+import { NavigationAction } from "@/components/ui/navigation/navigation-actions";
+import { currentProfile } from "@/lib/current-profile";
+import { redirect } from "next/navigation";
+import { Separator } from "@/components/ui/separator"
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { ServerType } from "@/database/typesOfSchemas";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { Separator } from "@/components/ui/separator";
-import { Plus } from "lucide-react";
-import NavigationAction from "./navigation-actions";
-
-
+import { NavigationItem } from "./navigation-item";
 
 const NavigationBar = async () => {
+    const user = await currentProfile();
+    if (!user) {
+        return redirect("/");
+    }
     const serverList = await getServers();
     return (
         <div className="space-y-4 flex flex-col items-center 
-        h-full text-primary w-full bg-[#1E1F22] py-3">
-            <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger>
-                        <Plus className="bg-green-800 w-[48px] h-[48px] rounded-[24px] hover:rounded-[16px] transition-all" />
-                    </TooltipTrigger>
-                    <TooltipContent className="bg-opacity-80 bg-black" side="right" sideOffset={15}>
-                        Create a new server
-                    </TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
-            <Separator className="rounded w-3/4 bg-zinc-400" />
-            {serverList.map((s: ServerType, index: number) => {
-                return (
-                    <NavigationAction key={index} server={s} />
-                )
-            })}
+        h-full text-primary w-full bg-[#1E1F22] py-3 text-zinc-50">
+            <NavigationAction />
+            <Separator className="bg-zinc-300 rounded-md w-10 mx-auto" />
+            <ScrollArea className="flex-1">
+                {serverList.map((server: ServerType) =>
+                    <div key={server._id} className="text-zinc-50 mb-4">
+                        <NavigationItem id={String(server._id)} name={server.name} />
+                    </div>
+                )}
+            </ScrollArea>
         </div>
     )
 }

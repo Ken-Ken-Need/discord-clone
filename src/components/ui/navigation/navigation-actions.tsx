@@ -1,31 +1,17 @@
+"use client"
 
-import { ServerType } from "@/database/typesOfSchemas";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip";
-
-interface ServerItemProps {
-    server: ServerType;
-}
-
-const NavigationAction: React.FC<ServerItemProps> = ({ server }) => {
+import { Plus } from "lucide-react"
+import { ActionToolTip } from "@/components/action-tooltip"
+export const NavigationAction = () => {
     return (
-        <TooltipProvider>
-            <Tooltip>
-                <TooltipTrigger>
-                    <div className="bg-slate-500 w-[48px] h-[48px] rounded-[24px] text-zinc-100 text-xl hover:rounded-[16px] transition-all overflow-hidden">
-                        {server.name}
+        <div>
+            <ActionToolTip side="right" align="center" label="Add a server">
+                <button className="group flex items-center">
+                    <div className="flex mx-3 w-[48px] h-[48px] rounded-[24px] group-hover:rounded-[16px] transition-all overflow-hidden items-center justify-center bg-background group-hover:bg-emerald-500">
+                        <Plus className="group-hover:text-white transition text-emerald-500" size={25} />
                     </div>
-                </TooltipTrigger>
-                <TooltipContent className="bg-opacity-80 bg-black" side="right" sideOffset={15}>
-                    {server.name}
-                </TooltipContent>
-            </Tooltip>
-        </TooltipProvider>
-    );
-};
-
-export default NavigationAction;
+                </button>
+            </ActionToolTip>
+        </div>
+    )
+}
