@@ -24,8 +24,8 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useModal } from "@/hooks/user-modal-store";
 
 const formSchema = z.object({
     name: z.string().min(1, {
@@ -34,14 +34,10 @@ const formSchema = z.object({
 })
 
 
-export const InitialModal = () => {
-    const [isMounted, setIsMounted] = useState(false);
-
+export const CreateServerModal = () => {
+    const { isOpen, onClose, type } = useModal();
+    const isModalOpen = isOpen && type === 'createServer';
     const router = useRouter();
-
-    useEffect(() => {
-        setIsMounted(true);
-    }, [])
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -64,19 +60,19 @@ export const InitialModal = () => {
 
             form.reset();
             router.refresh();
-            window.location.reload();
-
         } catch (e) {
             console.log(e);
         }
 
     }
 
-    if (!isMounted) {
-        return null;
+    const handleClose = () => {
+        form.reset();
+        onClose();
     }
+
     return (
-        <Dialog open>
+        <Dialog open={isModalOpen} onOpenChange={handleClose}>
             <DialogContent className="bg-white overflow-hidden">
                 <DialogHeader>
                     <DialogTitle className="text-center text-zinc font-bold text-2xl">

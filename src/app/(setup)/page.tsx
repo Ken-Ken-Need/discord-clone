@@ -6,22 +6,25 @@ import { redirect } from 'next/navigation';
 import { InitialModal } from '@/components/ui/modals/initialModal';
 
 
-const setUpPage = async() => {
+const setUpPage = async () => {
+    let user;
+    let member;
     try {
         await connectDB();
-        const user = await initialProfile();   
-        const member = await Member.findOne({user}).populate('server');
-        if (!member) {
-        } else {
-            const server = member.server;
-            return redirect(`/server/${server.id}`);
-        }
-        
-        return (
-            <InitialModal/>
-        )
+        user = await initialProfile();
+        member = await Member.findOne({ user }).populate('server');
     } catch (e) {
         console.log(e);
+    }
+
+    if (!member) {
+        console.log("member doesn't exist");
+        return (
+            <InitialModal />
+        )
+    } else {
+        const server = member.server;
+        return redirect(`/server/${server.id}`);
     }
 }
 
