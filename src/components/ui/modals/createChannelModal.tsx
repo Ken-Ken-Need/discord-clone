@@ -1,13 +1,12 @@
 "use client"
-
+import qs from "querystring";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, } from "react-hook-form"
-
 import {
     Dialog,
     DialogContent,
-    // DialogDescription,
+    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -24,12 +23,14 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useModal } from "@/hooks/user-modal-store";
 
 const formSchema = z.object({
     name: z.string().min(1, {
         message: "Channel name is required"
+    }).refine(name => name !== 'public', {
+        message: "Channel name cannot be public"
     })
 })
 
@@ -38,6 +39,7 @@ export const CreateChannelModal = () => {
     const { isOpen, onClose, type } = useModal();
     const isModalOpen = isOpen && type === 'createChannel';
     const router = useRouter();
+    const params = useParams();
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -50,7 +52,10 @@ export const CreateChannelModal = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             // post
-            await fetch("/api/servers/channels", {
+            const query = qs.stringify({
+                serverID: params?.serverID
+            })
+            await fetch(`/api/channels/?${query}`, {
                 method: "POST",
                 headers: {
                     'content-type': 'application/json'
@@ -60,7 +65,9 @@ export const CreateChannelModal = () => {
 
             form.reset();
             router.refresh();
+            onClose();
         } catch (e) {
+            console.log("dead here");
             console.log(e);
         }
 
@@ -78,9 +85,9 @@ export const CreateChannelModal = () => {
                     <DialogTitle className="text-center text-zinc font-bold text-2xl">
                         Create a new channel!
                     </DialogTitle>
-                    {/* <DialogDescription className="text-center text-zinc">
-                        You can always change the name of the server later.
-                    </DialogDescription> */}
+                    <DialogDescription className="text-center text-zinc">
+                        Try not to collide with existing channels.
+                    </DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} >
