@@ -8,3 +8,10 @@ export interface ServerType {
     createdAt: Date,
     inviteCode: string
 }
+
+export interface ChannelType {
+    _id: Schema.Types.ObjectId,
+    name: string,
+    server: Schema.Types.ObjectId,
+    createdAt: Date
+}

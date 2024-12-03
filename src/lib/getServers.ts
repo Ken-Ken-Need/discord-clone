@@ -5,7 +5,6 @@ const getServers = async () => {
     if (!user) {
         return redirect('/');
     }
-    console.log("In getServers:", user.servers)
     return user.servers;
 }
 
