@@ -22,11 +22,23 @@ export async function GET(req: Request) {
         if (cursor) {
             const message = await Message.findById(cursor);
 
-            messages = await Message.find({ channel: channelID, createdAt: { $lt: message.createdAt } }).limit(MESSAGES_BATCH).populate('member').sort({ createdAt: 1 });
+            messages = await Message.find({ channel: channelID, createdAt: { $lt: message.createdAt } }).limit(MESSAGES_BATCH).populate({
+                path: 'member',
+                populate: {
+                    path: 'user',
+                    model: 'User', // Reference to the User model
+                }
+            }).sort({ createdAt: 1 });
         } else {
             messages = await Message.find({
                 channel: channelID
-            }).limit(MESSAGES_BATCH).populate('member').sort({ createdAt: -1 });
+            }).limit(MESSAGES_BATCH).populate({
+                path: 'member',
+                populate: {
+                    path: 'user',
+                    model: 'User', // Reference to the User model
+                }
+            }).sort({ createdAt: -1 });
         }
 
         let nextCursor = null;

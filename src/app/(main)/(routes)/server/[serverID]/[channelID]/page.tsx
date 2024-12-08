@@ -5,6 +5,7 @@ import { currentProfile } from "@/lib/current-profile";
 import getChannelFromID from "@/lib/getChannelFromID";
 import getServerFromID from "@/lib/getServerFromID";
 import { Schema } from "mongoose";
+import { any, string, unknown } from "zod";
 
 interface ChannelPageProps {
     params: {
@@ -27,8 +28,9 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
             <div className="flex-1">
                 <ChatMessages
                     member={{
-                        _id: String(member._id), name: member.className,
-                        user: String(member.user)
+                        _id: String(member._id),
+                        name: member.className,
+                        user: user.username,
                     }}
                     name={channel.name}
                     chatID={String(channel._id)}
