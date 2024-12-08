@@ -15,3 +15,9 @@ export interface ChannelType {
     server: Schema.Types.ObjectId,
     createdAt: Date
 }
+
+export interface MemberType {
+    _id: Schema.Types.ObjectId,
+    name: string,
+    channel: Schema.Types.ObjectId,
+}
