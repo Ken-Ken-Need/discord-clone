@@ -6,7 +6,6 @@ import { Separator } from "@/components/ui/separator";
 const MainLayout = async ({ children, params }: { children: React.ReactNode, params: { serverID: string } }) => {
     const { serverID } = await params;
     const s = await getServerFromID(serverID);
-    console.log("channels:", s.channels)
     return (
         <div className="h-full" >
             <div className="h-full w-[300px] bg-slate-900 text-zinc-50 z-30 flex-col fixed inset-y-0">
