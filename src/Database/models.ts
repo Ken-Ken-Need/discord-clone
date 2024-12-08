@@ -35,7 +35,7 @@ const channelSchema = new Schema({
 
 const messageSchema = new Schema({
     content: { type: String, required: true },
-    author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    member: { type: Schema.Types.ObjectId, ref: 'Member', required: true },
     channel: { type: Schema.Types.ObjectId, ref: 'Channel', required: true },
     createdAt: { type: Date, default: Date.now }
 });
