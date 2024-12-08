@@ -1,6 +1,25 @@
-const ChannelPage = () => {
+import { ChatInput } from "@/components/chat/chat-input";
+import ChatHeader from "@/components/chat/chatHeader";
+import getChannelFromID from "@/lib/getChannelFromID";
+
+interface ChannelPageProps {
+    params: {
+        serverID: string;
+        channelID: string;
+    }
+}
+const ChannelPage = async ({ params }: ChannelPageProps) => {
+    const channel = await getChannelFromID(params.channelID);
+
     return (
-        <div>This is channel</div>
+        <div className="bg-[#313338] flex flex-col h-full text-white">
+            <ChatHeader />
+            <div className="flex-1">Future messages</div>
+            <ChatInput name={channel.name} type="channel" apiUrl="/api/socket/messages" query={{
+                channelID: String(channel._id),
+                serverID: String(channel.server),
+            }} />
+        </div>
     )
 }
 

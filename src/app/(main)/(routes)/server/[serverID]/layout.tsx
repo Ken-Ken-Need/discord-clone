@@ -18,7 +18,7 @@ const MainLayout = async ({ children, params }: { children: React.ReactNode, par
                     )
                 })}
             </div>
-            <main className="pl-[300px]">
+            <main className="pl-[300px] w-full h-screen fixed">
                 {children}
             </main>
         </div>
