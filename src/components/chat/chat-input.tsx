@@ -2,7 +2,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import axios from "axios";
 import qs from "querystring"
 import {
     Form,
@@ -38,7 +37,13 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
             const url = apiUrl + "?" + queryString;
             // console.log("This is url", url);
 
-            await axios.post(url, values);
+            // await axios.post(url, values);
+            const response = await fetch(url, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(values)
+            });
+            const data = await response.json();
+            console.log('Response:', data);
         } catch (e) {
             console.log(e);
         }

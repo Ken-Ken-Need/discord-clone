@@ -9,7 +9,8 @@ interface ChannelPageProps {
     }
 }
 const ChannelPage = async ({ params }: ChannelPageProps) => {
-    const channel = await getChannelFromID(params.channelID);
+    const { channelID } = await params;
+    const channel = await getChannelFromID(channelID);
 
     return (
         <div className="bg-[#313338] flex flex-col h-full text-white">
