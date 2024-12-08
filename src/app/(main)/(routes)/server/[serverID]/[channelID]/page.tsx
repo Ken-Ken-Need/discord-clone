@@ -25,7 +25,7 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
     return (
         <div className="bg-[#313338] flex flex-col h-full text-white">
             <ChatHeader />
-            <div className="flex-1">
+            <div className="flex-1 overflow-auto">
                 <ChatMessages
                     member={{
                         _id: String(member._id),
