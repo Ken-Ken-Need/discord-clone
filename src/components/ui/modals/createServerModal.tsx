@@ -79,7 +79,7 @@ export const CreateServerModal = () => {
                         Create your own discord server!
                     </DialogTitle>
                     <DialogDescription className="text-center text-zinc">
-                        You can always change the name of the server later.
+                        If a server with the same name already exists, you will be added to the server.
                     </DialogDescription>
                 </DialogHeader>
                 <Form {...form}>

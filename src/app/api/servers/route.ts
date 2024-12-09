@@ -12,34 +12,48 @@ export async function POST(req: Request) {
             return new NextResponse("Unauthorized", { status: 401 })
         }
 
+        const server = await Server.findOne({ name: name });
+        if (!server) {
+            const newServer = new Server({
+                name: name,
+                inviteCode: uuidv4(),
+                owner: user._id,
+            })
+            const savedServer = await newServer.save();
 
-        const newServer = new Server({
-            name: name,
-            inviteCode: uuidv4(),
-            owner: user._id,
-        })
-        const savedServer = await newServer.save();
+            const newMember = new Member({
+                role: 'MOD',
+                user: user,
+                server: savedServer._id,
+            });
+            const savedMember = await newMember.save();
 
-        const newMember = new Member({
-            role: 'MOD',
-            user: user,
-            server: savedServer._id,
-        });
-        const savedMember = await newMember.save();
-
-        const newChannel = new Channel({
-            name: "public",
-            server: savedServer._id,
-        });
-        const savedChannel = await newChannel.save();
+            const newChannel = new Channel({
+                name: "public",
+                server: savedServer._id,
+            });
+            const savedChannel = await newChannel.save();
 
 
-        savedServer.members.push(savedMember._id);
-        savedServer.channels.push(savedChannel._id);
+            savedServer.members.push(savedMember._id);
+            savedServer.channels.push(savedChannel._id);
 
-        user.servers.push(savedServer._id);
-        await user.save();
-        await savedServer.save();
+            user.servers.push(savedServer._id);
+            await user.save();
+            await savedServer.save();
+        } else {
+            const newMember = new Member({
+                user: user,
+                server: server._id,
+            });
+            const savedMember = await newMember.save();
+
+            user.servers.push(server._id);
+            await user.save();
+
+            server.members.push(savedMember._id);
+            await server.save();
+        }
 
     } catch (e) {
         console.log("[SERVER POST]", e);
