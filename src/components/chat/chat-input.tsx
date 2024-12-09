@@ -38,12 +38,11 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
             // console.log("This is url", url);
 
             // await axios.post(url, values);
-            const response = await fetch(url, {
+            fetch(url, {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(values)
             });
-            const data = await response.json();
-            console.log('Response:', data);
+            form.reset();
         } catch (e) {
             console.log(e);
         }

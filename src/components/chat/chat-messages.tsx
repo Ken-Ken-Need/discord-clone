@@ -66,7 +66,6 @@ export const ChatMessages = ({
         )
     }
 
-    const color = stringToHexColor(member.user);
     return (
         <div className="flex-1 flex flex-col py-4 overflow-y-auto">
             <div className="flex-1" />
@@ -77,9 +76,9 @@ export const ChatMessages = ({
                             return (
                                 <div key={String(m._id)} className="m-5">
                                     <div className="flex flex-row">
-                                        <div className={`bg-[${color}] w-7 h-7 rounded-full overflow-hidden`}>{member.user}</div>
+                                        <div className={`bg-[${stringToHexColor(m.member.user.username)}] w-7 h-7 rounded-full overflow-hidden border-zinc-100 border-2`}>{m.member.user.username}</div>
                                         <div className="pl-1 text-zinc-300">
-                                            {member.user}
+                                            {m.member.user.username}
                                         </div>
                                     </div>
                                     {m.content}
